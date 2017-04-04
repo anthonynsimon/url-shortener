@@ -1,0 +1,52 @@
+group 'com.anthonynsimon.urlshortener.writeapi'
+version '0.1.0'
+
+apply plugin: 'scala'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+compileScala.options.encoding = 'UTF-8'
+
+mainClassName = 'com.anthonynsimon.urlshortener.writeapi.WriteAPIServerMain'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    scalaBinaryVersion = '2.12'
+    scalaMinorVersion = '1'
+    finatraVersion = '2.9.0'
+    logbackVersion = '1.2.3'
+}
+
+
+dependencies {
+    compile "org.scala-lang:scala-library:$scalaBinaryVersion.$scalaMinorVersion"
+    compile "com.twitter:finatra-http_$scalaBinaryVersion:$finatraVersion"
+    compile "ch.qos.logback:logback-classic:$logbackVersion"
+}
+
+sourceSets {
+    main {
+        scala {
+            srcDirs = ['src/main/scala']
+        }
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+}
+
+task runArgs(type: JavaExec) {
+    group 'application'
+
+    classpath = sourceSets.main.runtimeClasspath
+    main = mainClassName
+
+    if (project.hasProperty('args')) {
+        args(project.getProperty('args').split(' '))
+    }
+}
