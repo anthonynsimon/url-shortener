@@ -8,9 +8,9 @@ import com.twitter.finatra.http.HttpServer
 import com.twitter.finatra.http.filters.{CommonFilters, LoggingMDCFilter, TraceIdMDCFilter}
 import com.twitter.finatra.http.routing.HttpRouter
 
-object WriteAPIServerMain extends WriteAPIServer
+object APIServerMain extends APIServer
 
-class WriteAPIServer extends HttpServer {
+class APIServer extends HttpServer {
 
 	override val disableAdminHttpServer = true
 

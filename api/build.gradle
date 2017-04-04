@@ -9,7 +9,7 @@ targetCompatibility = 1.8
 
 compileScala.options.encoding = 'UTF-8'
 
-mainClassName = 'com.anthonynsimon.urlshortener.api.WriteAPIServerMain'
+mainClassName = 'com.anthonynsimon.urlshortener.api.APIServerMain'
 
 repositories {
     mavenCentral()
