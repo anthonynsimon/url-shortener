@@ -1,0 +1,55 @@
+package com.anthonynsimon.urlshortener.api.services.impl
+
+import com.anthonynsimon.urlshortener.api.services.{EncodingCharset, EncodingRadix, ShortenUrlService}
+import com.google.inject.Inject
+import com.twitter.inject.Logging
+import com.twitter.inject.annotations.Flag
+import redis.clients.jedis.{Jedis => RedisClient}
+
+class RedisShortenUrlService @Inject()(client: RedisClient,
+									   @Flag("urls.keyprefix") urlKeyPrefix: String,
+									   @Flag("urls.reverselookupprefix") urlRevLookupPrefix: String,
+									   @Flag("urls.idcounterkey") counterKey: String)
+		extends ShortenUrlService with Logging {
+
+	override def create(url: String): String = {
+		reverseLookup(url) match {
+			case Some(id) => id
+			case None => {
+				val id = nextId()
+				val encodedId = encodeId(id, EncodingCharset, EncodingRadix)
+				client.set(getUrlKey(id), url)
+				client.set(getReverseLookupKey(url), encodedId)
+				encodedId
+			}
+		}
+
+	}
+
+	override def get(encodedId: String): Option[String] = {
+		val id = decodeId(encodedId, EncodingCharset, EncodingRadix)
+		Option(
+			client.get(
+				getUrlKey(id)))
+	}
+
+	private def reverseLookup(url: String): Option[String] = {
+		Option(
+			client.get(
+				getReverseLookupKey(url)))
+	}
+
+	private def getUrlKey(id: Int): String = String.format("%s%s", urlKeyPrefix, id.toString)
+
+	private def getReverseLookupKey(url: String): String = String.format("%s%s", urlRevLookupPrefix, url)
+
+	private def nextId(): Int = {
+		val current: Int = Option(client.get(counterKey)) match {
+			case Some(value) => value.toInt
+			case None => InitialId
+		}
+		val nextValue = current + 1
+		client.set(counterKey, nextValue.toString)
+		nextValue
+	}
+}

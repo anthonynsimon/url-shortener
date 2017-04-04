@@ -20,6 +20,7 @@ ext {
     scalaMinorVersion = '1'
     finatraVersion = '2.9.0'
     logbackVersion = '1.2.3'
+    jedisVersion = '2.9.0'
 }
 
 
@@ -27,6 +28,7 @@ dependencies {
     compile "org.scala-lang:scala-library:$scalaBinaryVersion.$scalaMinorVersion"
     compile "com.twitter:finatra-http_$scalaBinaryVersion:$finatraVersion"
     compile "ch.qos.logback:logback-classic:$logbackVersion"
+    compile "redis.clients:jedis:$jedisVersion"
 }
 
 sourceSets {
