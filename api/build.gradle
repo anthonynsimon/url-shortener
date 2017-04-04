@@ -1,4 +1,4 @@
-group 'com.anthonynsimon.urlshortener.writeapi'
+group 'com.anthonynsimon.urlshortener.api'
 version '0.1.0'
 
 apply plugin: 'scala'
@@ -9,7 +9,7 @@ targetCompatibility = 1.8
 
 compileScala.options.encoding = 'UTF-8'
 
-mainClassName = 'com.anthonynsimon.urlshortener.writeapi.WriteAPIServerMain'
+mainClassName = 'com.anthonynsimon.urlshortener.api.WriteAPIServerMain'
 
 repositories {
     mavenCentral()
