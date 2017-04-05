@@ -1,6 +1,6 @@
 package com.anthonynsimon.urlshortener.api.controllers
 
-import com.anthonynsimon.urlshortener.api.domain.http.{RedirectRequest, ShortenUrlRequest, ShortenUrlResponse}
+import com.anthonynsimon.urlshortener.api.domain.http.{GetUrlResponse, RedirectRequest, ShortenUrlRequest, ShortenUrlResponse}
 import com.anthonynsimon.urlshortener.api.services.ShortenUrlService
 import com.google.inject.Inject
 import com.twitter.finatra.http.Controller
@@ -26,9 +26,9 @@ class ShortenUrlController @Inject()(shortenService: ShortenUrlService)
 		shortenService.get(request.id) match {
 			case Some(url) => {
 				debug(s"Mapped ID: '${request.id}' to URL: '${url}'")
-				response
-						.movedPermanently
-						.location(url)
+				response.ok(
+					GetUrlResponse(url)
+				)
 			}
 			case None => response.notFound
 		}
