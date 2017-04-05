@@ -44,13 +44,6 @@ class RedisShortenUrlService @Inject()(client: RedisClient,
 	private def getReverseLookupKey(url: String): String = String.format("%s%s", urlRevLookupPrefix, url)
 
 	private def nextId(): Int = {
-		// TODO: make this a transaction
-		val current: Int = Option(client.get(counterKey)) match {
-			case Some(value) => value.toInt
-			case None => InitialId
-		}
-		val nextValue = current + 1
-		client.set(counterKey, nextValue.toString)
-		nextValue
+		client.incr(counterKey).toInt
 	}
 }
