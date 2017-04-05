@@ -22,7 +22,7 @@ class ShortenUrlController @Inject()(shortenService: ShortenUrlService)
 			ShortenUrlResponse(s"$protocol://$host/$result"))
 	}
 
-	get("/:id") { request: RedirectRequest =>
+	get("/urls/:id") { request: RedirectRequest =>
 		shortenService.get(request.id) match {
 			case Some(url) => {
 				debug(s"Redirecting to URL: '${url}', from short URL ID: ${request.id}")
