@@ -12,7 +12,7 @@ class ShortenUrlController @Inject()(shortenService: ShortenUrlService)
 	post("/urls") { request: ShortenUrlRequest =>
 		val result = shortenService.create(request.url)
 
-		debug(s"Shortened URL: '${request.url}', result: ${result}")
+		debug(s"Shortened URL: '${request.url}' to ID ${result}")
 
 		// TODO: make this configurable / inject from flags?
 		val protocol = "http"
@@ -25,7 +25,7 @@ class ShortenUrlController @Inject()(shortenService: ShortenUrlService)
 	get("/urls/:id") { request: RedirectRequest =>
 		shortenService.get(request.id) match {
 			case Some(url) => {
-				debug(s"Redirecting to URL: '${url}', from short URL ID: ${request.id}")
+				debug(s"Mapped ID: '${request.id}' to URL: '${url}'")
 				response
 						.movedPermanently
 						.location(url)
