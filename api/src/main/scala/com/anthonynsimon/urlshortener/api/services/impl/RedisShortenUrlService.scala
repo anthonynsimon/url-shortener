@@ -12,6 +12,12 @@ class RedisShortenUrlService @Inject()(client: RedisClient,
 									   @Flag("urls.idcounterkey") counterKey: String)
 		extends ShortenUrlService with Logging {
 
+	configRedis()
+
+	private def configRedis() = {
+		client.setnx(counterKey, InitialId.toString)
+	}
+
 	override def create(url: String): String = {
 		reverseLookup(url) match {
 			case Some(id) => id
