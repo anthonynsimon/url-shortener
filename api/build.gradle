@@ -21,6 +21,9 @@ ext {
     finatraVersion = '2.9.0'
     logbackVersion = '1.2.3'
     jedisVersion = '2.9.0'
+    slickVersion = '3.2.0'
+    postgresVersion = '42.0.0'
+    hikariCpVersion = '2.5.1'
 }
 
 
@@ -29,6 +32,9 @@ dependencies {
     compile "com.twitter:finatra-http_$scalaBinaryVersion:$finatraVersion"
     compile "ch.qos.logback:logback-classic:$logbackVersion"
     compile "redis.clients:jedis:$jedisVersion"
+    compile "com.typesafe.slick:slick_$scalaBinaryVersion:$slickVersion"
+    compile "org.postgresql:postgresql:$postgresVersion"
+    compile "com.zaxxer:HikariCP:$hikariCpVersion"
 }
 
 sourceSets {

@@ -24,7 +24,7 @@ class RedisShortenUrlService @Inject()(client: RedisClient,
 			case Some(id) => id
 			case None => {
 				val id = nextId()
-				val encodedId = encodeId(id, EncodingCharset, EncodingRadix)
+				val encodedId = encodeId(id)
 				client.set(getUrlKey(id), url)
 				client.set(getReverseLookupKey(url), encodedId)
 				encodedId
@@ -34,7 +34,7 @@ class RedisShortenUrlService @Inject()(client: RedisClient,
 	}
 
 	override def get(encodedId: String): Option[String] = {
-		val id = decodeId(encodedId, EncodingCharset, EncodingRadix)
+		val id = decodeId(encodedId)
 		Option(
 			client.get(
 				getUrlKey(id)))

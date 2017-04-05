@@ -6,7 +6,7 @@ trait ShortenUrlService {
 
 	def get(id: String): Option[String]
 
-	protected def encodeId(id: Int, charset: String, radix: Int): String = {
+	def encodeId(id: Int, charset: String=EncodingCharset, radix: Int=EncodingRadix): String = {
 		var num = id
 		var digits: List[Int] = List()
 		while (num > 0) {
@@ -17,7 +17,7 @@ trait ShortenUrlService {
 		digits.map(charset.charAt(_)).mkString
 	}
 
-	protected def decodeId(id: String, charset: String, radix: Int): Int = {
+	def decodeId(id: String, charset: String=EncodingCharset, radix: Int=EncodingRadix): Int = {
 		id.foldLeft[Int](0)((res, ch) => {
 			(radix * res) + charset.indexOf(ch)
 		})
