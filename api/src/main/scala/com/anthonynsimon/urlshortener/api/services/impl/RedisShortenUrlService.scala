@@ -15,6 +15,7 @@ class RedisShortenUrlService @Inject()(client: RedisClient,
 	configRedis()
 
 	private def configRedis() = {
+		// Sets the counter to the initial id if it does not exist
 		client.setnx(counterKey, InitialId.toString)
 	}
 
