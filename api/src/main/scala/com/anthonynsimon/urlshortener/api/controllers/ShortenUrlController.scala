@@ -3,10 +3,11 @@ package com.anthonynsimon.urlshortener.api.controllers
 import com.anthonynsimon.urlshortener.api.domain.http.{GetUrlResponse, RedirectRequest, ShortenUrlRequest, ShortenUrlResponse}
 import com.anthonynsimon.urlshortener.api.services.ShortenUrlService
 import com.google.inject.Inject
+import com.twitter.finagle.mysql.{Client => MysqlClient}
 import com.twitter.finatra.http.Controller
 import com.twitter.inject.Logging
 
-class ShortenUrlController @Inject()(shortenService: ShortenUrlService)
+class ShortenUrlController @Inject()(shortenService: ShortenUrlService, db: MysqlClient)
 		extends Controller with Logging {
 
 	post("/urls") { request: ShortenUrlRequest =>

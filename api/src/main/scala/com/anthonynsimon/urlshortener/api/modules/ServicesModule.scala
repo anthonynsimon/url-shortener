@@ -8,7 +8,8 @@ object ServicesModule extends TwitterModule {
 
 	override val modules = Seq(
 		RedisClientModule,
-		ShortenUrlModule
+		ShortenUrlModule,
+		MySqlClientModule
 	)
 
 	override def configure(): Unit = {

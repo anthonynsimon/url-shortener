@@ -15,20 +15,21 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    scalaBinaryVersion = '2.12'
-    scalaMinorVersion = '1'
-    finatraVersion = '2.9.0'
-    logbackVersion = '1.2.3'
-    jedisVersion = '2.9.0'
-}
-
+def versions = [
+        scalaBinary : '2.12',
+        scalaMinor  : '1',
+        finatra     : '2.9.0',
+        logback     : '1.2.3',
+        jedis       : '2.9.0',
+        finagleMysql: '6.43.0'
+]
 
 dependencies {
-    compile "org.scala-lang:scala-library:$scalaBinaryVersion.$scalaMinorVersion"
-    compile "com.twitter:finatra-http_$scalaBinaryVersion:$finatraVersion"
-    compile "ch.qos.logback:logback-classic:$logbackVersion"
-    compile "redis.clients:jedis:$jedisVersion"
+    compile "org.scala-lang:scala-library:$versions.scalaBinary.$versions.scalaMinor"
+    compile "com.twitter:finatra-http_$versions.scalaBinary:$versions.finatra"
+    compile "ch.qos.logback:logback-classic:$versions.logback"
+    compile "redis.clients:jedis:$versions.jedis"
+    compile "com.twitter:finagle-mysql_$versions.scalaBinary:$versions.finagleMysql"
 }
 
 sourceSets {
