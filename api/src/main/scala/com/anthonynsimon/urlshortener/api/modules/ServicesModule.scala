@@ -1,7 +1,7 @@
 package com.anthonynsimon.urlshortener.api.modules
 
-import com.anthonynsimon.urlshortener.api.services.ShortenUrlService
-import com.anthonynsimon.urlshortener.api.services.impl.RedisShortenUrlService
+import com.anthonynsimon.urlshortener.api.services.impl.{DefaultShortenIdService, MysqlUrlStoreService, RedisUrlCacheService}
+import com.anthonynsimon.urlshortener.api.services.{ShortenIdService, UrlCacheService, UrlStoreService}
 import com.twitter.inject.TwitterModule
 
 object ServicesModule extends TwitterModule {
@@ -13,6 +13,8 @@ object ServicesModule extends TwitterModule {
 	)
 
 	override def configure(): Unit = {
-		bind[ShortenUrlService].to[RedisShortenUrlService]
+		bind[UrlStoreService].to[MysqlUrlStoreService]
+		bind[ShortenIdService].to[DefaultShortenIdService]
+		bind[UrlCacheService].to[RedisUrlCacheService]
 	}
 }
